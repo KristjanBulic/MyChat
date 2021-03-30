@@ -8,8 +8,8 @@ import java.net.Socket;
 
 public class Client extends Thread{
 
-    private Server server;
-    private Socket socket;
+    private final Server server;
+    private final Socket socket;
     private String name;
     private BufferedReader reader;
     private PrintWriter writer;
@@ -30,6 +30,12 @@ public class Client extends Thread{
         writer.println(str);
     }
 
+    public void updateChat(){
+        for(String mes : server.chatLog){
+            this.sendMessage(mes);
+        }
+    }
+
     @Override
     public void run() {
 
@@ -38,7 +44,7 @@ public class Client extends Thread{
                 String mes = reader.readLine();
                 if (mes != null) {
                     server.chatLog.add(mes);
-                    server.echoer.interrupt();
+                    server.getEchoer().interrupt();
                 }
 
             } catch (IOException e) {

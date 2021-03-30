@@ -11,7 +11,6 @@ public class Main  {
             ServerSocket s = new ServerSocket(5000);
             Server ser = new Server(s, "mimi");
             ser.start();
-            //(new Thread(ser)).start();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -20,6 +20,9 @@ public class Echoer extends Thread{
                     for (Client x: server.clients){
                         x.sendMessage(mes);
                 }
+                    if (server.chatLog.size() > 50){
+                        server.clearChatLog();
+                    }
             }
         }
     }
