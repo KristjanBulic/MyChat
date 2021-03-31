@@ -3,12 +3,15 @@ package com.kristjanbulic;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class SexyGui extends Container {
     private JButton button1;
     public JPanel panel1;
     private JTextField textField1;
-    private JTextPane textPane1;
+    private JTextArea textArea1;
+
     Client client;
 
 
@@ -32,6 +35,19 @@ public class SexyGui extends Container {
                 }
             }
         });
-    }
 
+        (new Thread(){
+            @Override
+            public void run() {
+                while (true) {
+                    synchronized (client.getNewChat()) {
+                        if (client.isNewChat()) {
+                            textArea1.append(client.getLastChat() + "\n");
+                            client.setNewChat(false);
+                        }
+                    }
+                }
+            }
+        }).start();
+    }
 }

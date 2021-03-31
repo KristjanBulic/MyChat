@@ -5,13 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.Vector;
 
 public class Client extends Thread{
     private Socket socket;
     private BufferedReader reader;
     private PrintWriter writer;
-    private ArrayList<String> chatLog = new ArrayList<String>();
+    private Vector<String> chatLog = new Vector<>();
+    private Boolean newChat = false;
 
 
     public Client(Socket socket) {
@@ -33,7 +34,9 @@ public class Client extends Thread{
                 String message = reader.readLine();
                 System.out.println(message);
                 chatLog.add(message);
-
+                synchronized (this.newChat){
+                    this.setNewChat(true);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -42,5 +45,21 @@ public class Client extends Thread{
 
     public void sendMessage(String mes){
         writer.println(mes);
+    }
+
+    public boolean isNewChat() {
+        return newChat;
+    }
+
+    public void setNewChat(boolean newChat) {
+        this.newChat = newChat;
+    }
+
+    public String getLastChat(){
+        return this.chatLog.lastElement();
+    }
+
+    public Boolean getNewChat() {
+        return this.newChat;
     }
 }
