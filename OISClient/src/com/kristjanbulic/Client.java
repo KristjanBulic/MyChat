@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.Vector;
 
 public class Client extends Thread{
+    private String username = "User1";
     private Socket socket;
     private BufferedReader reader;
     private PrintWriter writer;
@@ -44,7 +45,8 @@ public class Client extends Thread{
     }
 
     public void sendMessage(String mes){
-        writer.println(mes);
+        String message = this.username + " ~>  " + mes;
+        writer.println(message);
     }
 
     public boolean isNewChat() {

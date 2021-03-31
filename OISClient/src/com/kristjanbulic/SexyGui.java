@@ -18,6 +18,7 @@ public class SexyGui extends Container {
     public SexyGui(Client client) {
 
         this.client = client;
+        //textArea1.setCaretPosition(textArea1.getDocument().getLength());
 
         button1.addActionListener(new ActionListener() {
             @Override
@@ -43,6 +44,7 @@ public class SexyGui extends Container {
                     synchronized (client.getNewChat()) {
                         if (client.isNewChat()) {
                             textArea1.append(client.getLastChat() + "\n");
+
                             client.setNewChat(false);
                         }
                     }
