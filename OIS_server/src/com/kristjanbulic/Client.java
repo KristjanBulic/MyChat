@@ -10,7 +10,6 @@ public class Client extends Thread{
 
     private final Server server;
     private final Socket socket;
-    private String name;
     private BufferedReader reader;
     private PrintWriter writer;
 
@@ -27,10 +26,6 @@ public class Client extends Thread{
     }
 
 
-    public String getClientName() {
-        return name;
-    }
-
     public void sendMessage(String str){
         writer.println(str);
     }
@@ -42,21 +37,12 @@ public class Client extends Thread{
     }
 
     public void disconnect(){
-        for (Client c : server.clients){
-            if (c.getClientName().equals(this.name)){
-                server.chatLog.remove(c);
-            }
-        }
+        server.clients.remove(this);
+        this.interrupt();
         try {
+            reader.close();
+            writer.close();
             socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void verify(){
-        try {
-            boolean isNew = (boolean) reader.read();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,15 +50,20 @@ public class Client extends Thread{
 
     @Override
     public void run() {
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             try {
                 String mes = reader.readLine();
                 if (mes != null) {
-                    if (mes.equals("<--EXIT-->")) {
+                    if (mes.contains("<--EXIT-->")) {
                         this.disconnect();
                     } else {
                         server.chatLog.add(mes);
-                        server.getEchoer().interrupt();
+                        for (Client x: server.clients) {
+                            x.sendMessage(mes);
+                        }
+                        if (server.chatLog.size() > 50){
+                            server.clearChatLog();
+                        }
                     }
                 }
             } catch (IOException e) {

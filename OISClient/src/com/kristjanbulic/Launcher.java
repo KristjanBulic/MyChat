@@ -5,21 +5,19 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class Launcher {
-    public static void startClient(String ip, int port, String username, String password, Boolean newUser){
-        try { //ZMRZNE CE JE PRIJAVA NAPACNA
-
-            Client usr = new Client(new Socket(ip, port), username, password, newUser);
-            usr.wait(5000);
+    public static JFrame frame;
+    public static void startClient(String ip, int port, String username){
+        try {
+            Client usr = new Client(new Socket(ip, port), username);
             usr.start();
-            JFrame frame = new JFrame("Server");
+            frame = new JFrame("Server");
             frame.setSize(800, 400);
             frame.setContentPane(new SexyGui(usr).panel1);
-
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
             frame.setVisible(true);
             Main.frame.dispose();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             javax.swing.JOptionPane.showMessageDialog(null, "Something went wrong");
         }
     }

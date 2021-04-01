@@ -8,7 +8,6 @@ import java.net.ServerSocket;
 
 public class ServerGUI {
     public JPanel panel1;
-    private JTextField imeTextField;
     private JTextField portTextField;
     private JButton startServerButton;
 
@@ -20,7 +19,7 @@ public class ServerGUI {
             public void actionPerformed(ActionEvent e) {
                 try {
                     ServerSocket s = new ServerSocket(Integer.parseInt(portTextField.getText()));
-                    Server ser = new Server(s, imeTextField.getText());
+                    Server ser = new Server(s);
                     ser.start();
                     startServerButton.removeActionListener(this);
                     startServerButton.setText("Running");

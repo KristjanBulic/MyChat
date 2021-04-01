@@ -9,21 +9,20 @@ public class SexyGui extends Container {
     public JPanel panel1;
     private JTextField textField1;
     private JTextArea textArea1;
-    private Client client;
+    private JButton exitButton;
+    private final Client client;
 
 
     public SexyGui(Client client) {
 
         this.client = client;
 
-
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                client.sendMessage(textField1.getText());
-                textField1.setText("");
-            }
+        button1.addActionListener(e -> {
+            client.sendMessage(textField1.getText());
+            textField1.setText("");
         });
+
+
         textField1.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -36,18 +35,20 @@ public class SexyGui extends Container {
 
 
 
-        (new Thread(){
-            @Override
-            public void run() {
-                while (true) {
-                        if (client.unRead.size() != 0) {
-                            addChat(client.unRead.firstElement());
-                            textArea1.setCaretPosition(textArea1.getDocument().getLength());
-                        }
+        (new Thread(() -> {
+            while (true) {
+                    if (client.unRead.size() != 0) {
+                        addChat(client.unRead.firstElement());
+                        textArea1.setCaretPosition(textArea1.getDocument().getLength());
                     }
+                }
 
-            }
-        }).start();
+        })).start();
+        exitButton.addActionListener(e -> {
+            Launcher.frame.dispose();
+            client.disconnect();
+            System.exit(0);
+        });
     }
     public void addChat(String mes){
         textArea1.append(mes + "\n");
