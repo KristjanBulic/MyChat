@@ -8,15 +8,18 @@ import java.net.Socket;
 import java.util.Vector;
 
 public class Client extends Thread{
-    private String username = "User1";
+    private String username;
+    private String password;
     private Socket socket;
     private BufferedReader reader;
     private PrintWriter writer;
-    private Vector<String> chatLog = new Vector<>();
     public Vector<String> unRead = new Vector<>();
 
 
-    public Client(Socket socket) {
+
+    public Client(Socket socket, String username, String password, boolean newuser) {
+        this.username = username;
+        this.password =password;
         this.socket = socket;
         try {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -26,7 +29,6 @@ public class Client extends Thread{
         }
 
     }
-
 
     @Override
     public void run() {
@@ -44,7 +46,7 @@ public class Client extends Thread{
     }
 
     public void sendMessage(String mes){
-        String message = this.username + " ~>  " + mes;
+        String message = "\n  " + this.username + " ~>  " + mes;
         writer.println(message);
     }
 
@@ -59,8 +61,5 @@ public class Client extends Thread{
         }
     }
 
-    public void addInChatLog(String str){
-        this.chatLog.add(str);
-    }
 
 }

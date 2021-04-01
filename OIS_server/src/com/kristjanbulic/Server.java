@@ -46,6 +46,7 @@ public class Server extends Thread{
         while (true) {
             try {
                 Client c = new Client(this, socket.accept());
+
                 clients.add(c);
                 c.start();
                 c.updateChat(); //premaknemo v client po prijavi

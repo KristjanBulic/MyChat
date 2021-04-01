@@ -54,6 +54,14 @@ public class Client extends Thread{
         }
     }
 
+    public void verify(){
+        try {
+            boolean isNew = (boolean) reader.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
         while (true) {
