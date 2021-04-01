@@ -26,6 +26,11 @@ public class Client extends Thread{
         }
     }
 
+
+    public String getClientName() {
+        return name;
+    }
+
     public void sendMessage(String str){
         writer.println(str);
     }
@@ -36,17 +41,32 @@ public class Client extends Thread{
         }
     }
 
+    public void disconnect(){
+        for (Client c : server.clients){
+            if (c.getClientName().equals(this.name)){
+                server.chatLog.remove(c);
+            }
+        }
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
-
         while (true) {
             try {
                 String mes = reader.readLine();
                 if (mes != null) {
-                    server.chatLog.add(mes);
-                    server.getEchoer().interrupt();
+                    if (mes.equals("<--EXIT-->")) {
+                        this.disconnect();
+                    } else {
+                        server.chatLog.add(mes);
+                        server.getEchoer().interrupt();
+                    }
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

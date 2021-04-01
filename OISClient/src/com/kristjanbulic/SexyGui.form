@@ -15,7 +15,10 @@
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-14997972"/>
+          <foreground color="-14997972"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="cb242" class="javax.swing.JButton" binding="button1" default-binding="true">
@@ -23,7 +26,9 @@
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <background color="-13466952"/>
+              <foreground color="-4464134"/>
+              <text value="Send"/>
             </properties>
           </component>
           <component id="d6fcd" class="javax.swing.JTextField" binding="textField1" default-binding="true">
@@ -32,7 +37,12 @@
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-15774603"/>
+              <foreground color="-4464134"/>
+              <selectedTextColor color="-4464134"/>
+              <selectionColor color="-4464134"/>
+            </properties>
           </component>
           <scrollpane id="34492">
             <constraints>
@@ -46,7 +56,11 @@
               <component id="92a3c" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
                 <constraints/>
                 <properties>
+                  <background color="-15774603"/>
                   <editable value="false"/>
+                  <foreground color="-4464134"/>
+                  <selectedTextColor color="-4464134"/>
+                  <selectionColor color="-4464134"/>
                 </properties>
               </component>
             </children>

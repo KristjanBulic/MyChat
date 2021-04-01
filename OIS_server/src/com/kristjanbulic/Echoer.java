@@ -1,8 +1,9 @@
 package com.kristjanbulic;
 
 
-public class Echoer extends Thread{
 
+public class Echoer extends Thread{
+    //poskrbi da vsi uporabniki dobijo sporocilo
     private Server server;
 
     public Echoer(Server server) {

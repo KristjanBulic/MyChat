@@ -31,6 +31,14 @@ public class Server extends Thread{
         }
     }
 
+    public void shutdownSocket(){
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
         chatLog.add("hello");
@@ -40,7 +48,7 @@ public class Server extends Thread{
                 Client c = new Client(this, socket.accept());
                 clients.add(c);
                 c.start();
-                c.updateChat();
+                c.updateChat(); //premaknemo v client po prijavi
             } catch (IOException e) {
                 e.printStackTrace();
             }

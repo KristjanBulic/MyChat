@@ -37,19 +37,24 @@ public class SexyGui extends Container {
             }
         });
 
+
+
         (new Thread(){
             @Override
             public void run() {
                 while (true) {
-                    synchronized (client.getNewChat()) {
-                        if (client.isNewChat()) {
-                            textArea1.append(client.getLastChat() + "\n");
+                        if (client.unRead.size() != 0) {
+                            addChat(client.unRead.firstElement());
 
-                            client.setNewChat(false);
                         }
                     }
-                }
+
             }
         }).start();
+    }
+    public void addChat(String mes){
+        textArea1.append(mes + "\n");
+        client.unRead.remove(mes);
+        client.addInChatLog(mes);
     }
 }

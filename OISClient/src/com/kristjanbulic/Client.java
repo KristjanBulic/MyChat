@@ -13,7 +13,7 @@ public class Client extends Thread{
     private BufferedReader reader;
     private PrintWriter writer;
     private Vector<String> chatLog = new Vector<>();
-    private Boolean newChat = false;
+    public Vector<String> unRead = new Vector<>();
 
 
     public Client(Socket socket) {
@@ -34,9 +34,8 @@ public class Client extends Thread{
             try {
                 String message = reader.readLine();
                 System.out.println(message);
-                chatLog.add(message);
-                synchronized (this.newChat){
-                    this.setNewChat(true);
+                if (message != null) {
+                    unRead.add(message);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -49,19 +48,19 @@ public class Client extends Thread{
         writer.println(message);
     }
 
-    public boolean isNewChat() {
-        return newChat;
+
+
+    public void disconnect(){
+        try {
+            this.sendMessage("<--EXIT-->");
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setNewChat(boolean newChat) {
-        this.newChat = newChat;
+    public void addInChatLog(String str){
+        this.chatLog.add(str);
     }
 
-    public String getLastChat(){
-        return this.chatLog.lastElement();
-    }
-
-    public Boolean getNewChat() {
-        return this.newChat;
-    }
 }
