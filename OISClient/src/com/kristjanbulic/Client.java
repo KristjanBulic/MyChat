@@ -31,7 +31,7 @@ public class Client extends Thread{
 
     @Override
     public void run() {
-        while (true){
+        while (!Thread.currentThread().isInterrupted()){
             try {
                 String message = reader.readLine();
                 //System.out.println(message);
@@ -52,9 +52,9 @@ public class Client extends Thread{
     public void disconnect(){
         try {
             this.sendMessage("<--EXIT-->");
-            this.stop();
-            writer.close();
+            this.interrupt();
             reader.close();
+            writer.close();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();

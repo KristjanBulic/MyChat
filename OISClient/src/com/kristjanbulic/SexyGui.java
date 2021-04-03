@@ -36,7 +36,7 @@ public class SexyGui extends Container {
 
 
         (new Thread(() -> {
-            while (true) {
+            while (!Thread.currentThread().isInterrupted()) {
                     if (client.unRead.size() != 0) {
                         addChat(client.unRead.firstElement());
                         textArea1.setCaretPosition(textArea1.getDocument().getLength());
@@ -44,11 +44,7 @@ public class SexyGui extends Container {
                 }
 
         })).start();
-        exitButton.addActionListener(e -> {
-            Launcher.frame.dispose();
-            client.disconnect();
-            System.exit(0);
-        });
+
     }
     public void addChat(String mes){
         textArea1.append(mes + "\n");

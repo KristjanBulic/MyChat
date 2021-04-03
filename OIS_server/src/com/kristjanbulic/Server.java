@@ -40,12 +40,12 @@ public class Server extends Thread{
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Unable to stop server");
         }
-        this.interrupt();
+        this.stop();
     }
 
     @Override
     public void run() {
-        while (!Thread.currentThread().isInterrupted()) {
+        while (true) {
             try {
                 Client c = new Client(this, socket.accept());
                 clients.add(c);
