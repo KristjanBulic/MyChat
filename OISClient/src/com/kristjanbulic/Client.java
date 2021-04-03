@@ -25,6 +25,7 @@ public class Client extends Thread{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        writer.println(username);
 
     }
 

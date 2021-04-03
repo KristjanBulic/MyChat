@@ -10,6 +10,7 @@ public class Client extends Thread{
 
     private final Server server;
     private final Socket socket;
+    private String username;
     private BufferedReader reader;
     private PrintWriter writer;
 
@@ -17,26 +18,38 @@ public class Client extends Thread{
     public Client(Server server, Socket socket) {
         this.server = server;
         this.socket = socket;
+
         try {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(socket.getOutputStream(), true);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            this.username = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public PrintWriter getWriter(){
+        return this.writer;
+    }
+
+    public String getUsername(){
+        return this.username;
     }
 
 
-    public void sendMessage(String str){
-        writer.println(str);
-    }
 
     public void updateChat(){
         for(String mes : server.chatLog){
-            this.sendMessage(mes);
+            writer.println(mes);
         }
     }
 
     public void disconnect(){
+        server.sendMessage("\tSERVER ~>  " + this.username + " left server");
         server.clients.remove(this);
         this.interrupt();
         try {
@@ -58,12 +71,7 @@ public class Client extends Thread{
                         this.disconnect();
                     } else {
                         server.chatLog.add(mes);
-                        for (Client x: server.clients) {
-                            x.sendMessage(mes);
-                        }
-                        if (server.chatLog.size() > 50){
-                            server.clearChatLog();
-                        }
+                        server.sendMessage(mes);
                     }
                 }
             } catch (IOException e) {
