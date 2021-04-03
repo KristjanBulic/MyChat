@@ -3,6 +3,9 @@ package com.kristjanbulic;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 
 public class Main  {
@@ -24,7 +27,6 @@ public class Main  {
                         System.exit(0);
 
                     case 1:
-                        break;
 
                     case 2:
                         break;

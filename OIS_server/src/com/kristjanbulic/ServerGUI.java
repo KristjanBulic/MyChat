@@ -31,6 +31,7 @@ public class ServerGUI {
         });
 
         stopServerButton.addActionListener(e -> {
+            ser.interrupt();
             ser.stopServer();
             stopServerButton.setVisible(false);
             startServerButton.setText("Start");

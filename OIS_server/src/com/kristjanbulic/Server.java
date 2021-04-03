@@ -35,17 +35,20 @@ public class Server extends Thread{
     }
 
     public void stopServer(){
+        for (Client client : clients){
+            client.disconnect();
+        }
         try {
             socket.close();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Unable to stop server");
         }
-        this.stop();
+
     }
 
     @Override
     public void run() {
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             try {
                 Client c = new Client(this, socket.accept());
                 clients.add(c);

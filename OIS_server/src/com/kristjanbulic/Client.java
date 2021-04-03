@@ -63,7 +63,7 @@ public class Client extends Thread{
 
     @Override
     public void run() {
-        while (!Thread.currentThread().isInterrupted()) {
+        while (!Thread.currentThread().isInterrupted()) { //
             try {
                 String mes = reader.readLine();
                 if (mes != null) {
