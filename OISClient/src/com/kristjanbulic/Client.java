@@ -25,16 +25,15 @@ public class Client extends Thread{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        writer.println(username);
+        writer.println(username); //send username to the server
 
     }
 
     @Override
-    public void run() {
+    public void run() { //listens for messages from server
         while (!Thread.currentThread().isInterrupted()){
             try {
                 String message = reader.readLine();
-                //System.out.println(message);
                 if (message != null) {
                     unRead.add(message);
                 }
@@ -45,6 +44,7 @@ public class Client extends Thread{
     }
 
     public void sendMessage(String mes){
+        //sends message to the server
         String message = "\n  " + this.username + " ~>  " + mes;
         writer.println(message);
     }
@@ -52,7 +52,7 @@ public class Client extends Thread{
     public void disconnect(){
         try {
             this.sendMessage("<--EXIT-->");
-            this.interrupt();
+            this.interrupt(); //stops this thread
             reader.close();
             writer.close();
             socket.close();

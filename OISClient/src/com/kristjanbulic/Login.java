@@ -9,7 +9,7 @@ public class Login {
     private JTextField IPTextField;
     private JTextField portTextField;
 
-    public Login() {
+    public Login() { //collects ip, port and username and sends it to launcher
         joinButton.addActionListener(e -> {
             Launcher.startClient(IPTextField.getText(), Integer.parseInt(portTextField.getText()),
                     usernameTextField.getText());
