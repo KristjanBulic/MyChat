@@ -13,11 +13,10 @@ public class Server extends Thread{
 
     public Server(ServerSocket socket) {
         this.socket = socket;
-
     }
 
 
-    public void clearChatLog(){
+    public void clearChatLog(){  //deletes 20 entrys from chatlog
         int i = 0;
         while (i < 20){
             this.chatLog.remove(0);
@@ -25,7 +24,7 @@ public class Server extends Thread{
         }
     }
 
-    public void sendMessage(String str){
+    public void sendMessage(String str){ //sents message to all clients
         for (Client x: this.clients) {
             x.getWriter().println(str);
         }
@@ -34,7 +33,7 @@ public class Server extends Thread{
         }
     }
 
-    public void stopServer(){
+    public void stopServer(){ //disconects all clients and close socket
         for (Client client : clients){
             client.disconnect();
         }
@@ -47,7 +46,7 @@ public class Server extends Thread{
     }
 
     @Override
-    public void run() {
+    public void run() { //listens for new clients
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Client c = new Client(this, socket.accept());

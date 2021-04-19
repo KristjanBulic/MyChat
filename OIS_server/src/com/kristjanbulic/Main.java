@@ -19,8 +19,8 @@ public class Main  {
         {
             @Override
             public void windowClosing(WindowEvent e)
-            {
-                int status = JOptionPane.showConfirmDialog(frame, "Make sure server is closed");
+            { //verify close operation
+                int status = JOptionPane.showConfirmDialog(frame, "Want to close?");
                 switch (status){
                     case 0:
                         e.getWindow().dispose();

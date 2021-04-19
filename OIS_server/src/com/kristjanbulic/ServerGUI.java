@@ -18,7 +18,7 @@ public class ServerGUI {
 
         startServerButton.addActionListener(e -> {
             try {
-                ServerSocket s = new ServerSocket(Integer.parseInt(portTextField.getText()));
+                ServerSocket s = new ServerSocket(Integer.parseInt(portTextField.getText())); //opens new server on port xxxx
                 ser = new Server(s);
                 ser.start();
                 startServerButton.setVisible(false);
@@ -31,7 +31,7 @@ public class ServerGUI {
         });
 
         stopServerButton.addActionListener(e -> {
-            ser.interrupt();
+            ser.interrupt();  //stops server thread
             ser.stopServer();
             stopServerButton.setVisible(false);
             startServerButton.setText("Start");

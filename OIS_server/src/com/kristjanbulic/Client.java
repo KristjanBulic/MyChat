@@ -41,8 +41,7 @@ public class Client extends Thread{
     }
 
 
-
-    public void updateChat(){
+    public void updateChat(){  //sends all messages in servers chatlog to client
         for(String mes : server.chatLog){
             writer.println(mes);
         }
@@ -51,7 +50,7 @@ public class Client extends Thread{
     public void disconnect(){
         server.sendMessage("\tSERVER ~>  " + this.username + " left server");
         server.clients.remove(this);
-        this.interrupt();
+        this.interrupt(); //stop listening for new messages
         try {
             reader.close();
             writer.close();
@@ -62,7 +61,7 @@ public class Client extends Thread{
     }
 
     @Override
-    public void run() {
+    public void run() { //listens for new messages
         while (!Thread.currentThread().isInterrupted()) { //
             try {
                 String mes = reader.readLine();
